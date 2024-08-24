@@ -23,11 +23,7 @@ USER $HOST_USER
 # 8. Set the working directory
 WORKDIR $HOME
 
-# 9. Install conda and pip packages
-RUN conda install --yes --file conda_requirements.txt \
-    && rm conda_requirements.txt \
-    && pip install --user -r pip_requirements.txt --no-cache-dir \
-    && rm pip_requirements.txt
+
 
 # 10. Set the default command to /bin/bash
 CMD ["/bin/bash"]

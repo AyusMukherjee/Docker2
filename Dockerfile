@@ -7,7 +7,7 @@ LABEL maintainer="Ayus Mukherjee"
 ARG HOST_USER=Ayus
 
 # Step 4: 
-ENV HOME=/home/$HOST_USER
+
 
 # Step 5: 
 COPY pip_requirements.txt conda_requirements.txt $HOME/

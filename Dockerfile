@@ -1,25 +1,33 @@
+# 1. Use Ubuntu version 18.04 as the base image
 FROM ubuntu:18.04
 
-# Step 2: 
+# 2. Set the maintainer label
 LABEL maintainer="Ayus Mukherjee"
 
-# Step 3: 
+# 3. Create an argument for the host user
 ARG HOST_USER=Ayus
 
-# Step 4: 
+# 4. Set environment variables
+ENV HOME /home/$HOST_USER
 
-
-# Step 5: 
+# 5. Copy requirement files into the container filesystem
 COPY pip_requirements.txt conda_requirements.txt $HOME/
 
-# Step 6: 
+# 6. Create a new user and set up the environment
+RUN useradd -ms /bin/bash $HOST_USER \
+    && chown -R $HOST_USER:$HOST_USER $HOME
+
+# 7. Switch to the created user
 USER $HOST_USER
 
-# Step 7: 
+# 8. Set the working directory
 WORKDIR $HOME
 
-RUN conda install --yes --file conda_requirements.txt && rm conda_requirements.txt \
-    && pip install --user -r pip_requirements.txt --no-cache-dir && rm pip_requirements.txt
+# 9. Install conda and pip packages
+RUN conda install --yes --file conda_requirements.txt \
+    && rm conda_requirements.txt \
+    && pip install --user -r pip_requirements.txt --no-cache-dir \
+    && rm pip_requirements.txt
 
-# Step 10: 
+# 10. Set the default command to /bin/bash
 CMD ["/bin/bash"]

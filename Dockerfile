@@ -20,8 +20,7 @@ RUN useradd -ms /bin/bash $HOST_USER \
 # 7. Switch to the created user
 USER $HOST_USER
 
-RUN pip install --user -r pip_requirements.txt --no-cache-dir \
-    && rm pip_requirements.txt
+
 
 # 8. Set the working directory
 WORKDIR $HOME
